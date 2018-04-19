@@ -4,6 +4,9 @@
   "license": "MIT",
   "main": "server.js",
   "angular-cli": {},
+  "engines": {
+    "node": "8.11.1",
+  },
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
