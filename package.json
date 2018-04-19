@@ -1,12 +1,12 @@
 {
   "name": "drafter-app",
   "version": "0.0.0",
+  "engines": {
+    "node": "8.9.4"
+  },
   "license": "MIT",
   "main": "server.js",
   "angular-cli": {},
-  "engines": {
-    "node": "8.11.1",
-  },
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
