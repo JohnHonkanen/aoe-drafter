@@ -34,6 +34,7 @@ app.get('*', (req, res) => {
  * Get port from environment and store in Express.
  */
 const port = process.env.PORT || '3000';
+const dbUrl = process.env.MONGODB_URI || db.url;
 app.set('port', port);
 
 /**
@@ -60,7 +61,7 @@ io.on('connection', (socket) => {
 /**
  * Listen on provided port, on all network interfaces.
  */
-mongoose.connect(db.url, (err) => {
+mongoose.connect(dbUrl, (err) => {
 	if(err) return console.log(err);
 
 	server.listen(port, () => console.log(`API running on localhost:${port}`));

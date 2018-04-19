@@ -3,7 +3,7 @@ const router = express.Router();
 
 //declare axios for making http request
 const axios = require('axios');
-const API = 'http://localhost:3000/server-api'; //API Link
+const API = process.env.API_LINK ||'http://localhost:3000/server-api'; //API Link
 
 
 router.get('/', (req, res) => {
