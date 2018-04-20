@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const civsJson = require('../../resources/civ');
 var Room = require('./../../model/room');
+
 
 router.get('/rooms', (req, res) => {
 	Room.find({}, (err, rooms) => {
@@ -11,11 +13,11 @@ router.get('/rooms', (req, res) => {
 });
 
 router.get('/rooms/:id', (req, res) => {
-Room.find({_id : req.params.id}, (err, room) =>{
-	if(err) throw err;
+	Room.find({_id : req.params.id}, (err, room) =>{
+		if(err) throw err;
 
-	res.send(room);
-});
+		res.send(room);
+	});
 })
 
 router.post('/rooms/create', (req, res) => {
