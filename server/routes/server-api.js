@@ -43,7 +43,7 @@ router.post('/rooms/create', (req, res) => {
 });
 
 router.post('/rooms/:id/ban/:civ', (req,res) => {
-	var id = req.params.id;
+	const id = req.params.id;
 
 	Room.findByIdAndUpdate(id, 
 		{$addToSet: { "bans" : req.params.civ}},
@@ -66,7 +66,53 @@ router.post('/rooms/:id/ban/:civ', (req,res) => {
 	res.send("Banned and Updated");
 });
 
+router.post('/room/:id/unban/:civ', (req, res) => {
+	const id = req.params.id;
+
+	Room.findByIdAndUpdate(id, 
+		{$pull: { "bans" : req.params.civ}},
+		(err, model) =>{
+			if(err) throw err;
+
+			console.log("Updated Bans");
+		}
+	);
+
+	Room.findByIdAndUpdate(id, 
+		{$addToSet: { "civs" : req.params.civ}},
+		(err, model) =>{
+			if(err) throw err;
+
+			console.log("Updated civs");
+		}
+	);
+
+	res.send("Banned and Updated");
+});
+
 router.post('rooms/:id/pick/:team/:civ', (req,res) => {
+	const id = req.params.id;
+	const team = req.params.team;
+
+	Room.findByIdAndUpdate(id, 
+		{$pull: { "civs" : req.params.civ}},
+		(err, model) =>{
+			if(err) throw err;
+
+			console.log("Updated Bans");
+		}
+	);
+
+	Room.findByIdAndUpdate(id, 
+		{$addToSet: { team : req.params.civ}},
+		(err, model) =>{
+			if(err) throw err;
+
+			console.log("Updated civs");
+		}
+	);
+
+	res.send(team + " picked " + req.params.civ);
 
 });
 
