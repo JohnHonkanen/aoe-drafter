@@ -49,6 +49,10 @@ export class RoomComponent implements OnInit {
 		this.roomsService.banCivInRoom(civ, this.id);
 	}
 
+	unBanCiv(civ : string){
+		this.roomsService.unBanCivInRoom(civ, this.id);
+	}
+
 	
 
 }

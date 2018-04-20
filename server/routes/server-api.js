@@ -42,6 +42,45 @@ router.post('/rooms/create', (req, res) => {
 	res.send("Created room");
 });
 
+/**
+ * Randomize array element order in-place.
+ * Using Durstenfeld shuffle algorithm.
+ */
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
+router.all('/rooms/create/random/:number', (req, res) => {
+	const number = req.params.number;
+	var civsList = civsJson.civList;
+	shuffleArray(civsList);
+	civsList = civsList.slice(0,number);
+
+	Room.remove({}, function(err) { 
+		if(err) throw err;
+	});
+	var newRoom = Room({
+		civs: civsList,
+		bans: [],
+		team_1: [],
+		team_2: [],
+		created_at: "",
+		updated_at: "",
+	});
+
+	newRoom.save(function(err){
+		if(err) throw err;
+
+		console.log("Room Created");
+		res.redirect('/');
+	});
+});
+
 router.post('/rooms/:id/ban/:civ', (req,res) => {
 	const id = req.params.id;
 
@@ -66,7 +105,7 @@ router.post('/rooms/:id/ban/:civ', (req,res) => {
 	res.send("Banned and Updated");
 });
 
-router.post('/room/:id/unban/:civ', (req, res) => {
+router.post('/rooms/:id/unban/:civ', (req, res) => {
 	const id = req.params.id;
 
 	Room.findByIdAndUpdate(id, 

@@ -13,9 +13,9 @@
 <div class="container">
 	<h4> Banned Civs </h4>
 	<div class="row">
-		<div *ngFor="let ban of room.bans;" class="col-sm red margin">
+		<button *ngFor="let ban of room.bans;" class="col-sm red margin" on-click="unBanCiv(ban)">
 			{{ban}}
-		</div>
+		</button>
 	</div>
 </div>
 

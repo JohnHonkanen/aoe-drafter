@@ -33,9 +33,14 @@ export class RoomsService {
 		this.http.post('server-api/rooms/' + room + '/ban/' + civ, [], []).subscribe(() => {
 			console.log("Emiting Update");
 			this.socket.emit('update', civ);
-		});
+		});		
+	}
 
-		
+	unBanCivInRoom(civ : string, room: string){
+		this.http.post('server-api/rooms/' + room + '/unban/' + civ, [], []).subscribe(() => {
+			console.log("Emiting Update");
+			this.socket.emit('update', civ);
+		});	
 	}
 
 	onUpdate() : Observable<string>
