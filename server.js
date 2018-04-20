@@ -10,7 +10,7 @@ const serverApi = require('./server/routes/server-api');
 
 //Db
 var mongoose = require('mongoose');
-const db = require('./config/db');
+const db = process.env.MONGODB_URI || require('./config/db').url;
 
 const app = express();
 
@@ -34,7 +34,7 @@ app.get('*', (req, res) => {
  * Get port from environment and store in Express.
  */
 const port = process.env.PORT || '3000';
-const dbUrl = process.env.MONGODB_URI || db.url;
+const dbUrl = db;
 app.set('port', port);
 
 /**
