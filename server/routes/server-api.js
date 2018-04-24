@@ -55,7 +55,7 @@ function shuffleArray(array) {
     }
 }
 
-router.all('/rooms/create/random/:number', (req, res) => {
+router.post('/rooms/create/random/:number', (req, res) => {
 	const number = req.params.number;
 	var civsList = civsJson.civList;
 	shuffleArray(civsList);
@@ -76,8 +76,8 @@ router.all('/rooms/create/random/:number', (req, res) => {
 	newRoom.save(function(err){
 		if(err) throw err;
 
-		console.log("Room Created");
-		res.redirect('/');
+		console.log("Room Created: " + newRoom._id);
+		res.send(newRoom._id);
 	});
 });
 
@@ -129,10 +129,10 @@ router.post('/rooms/:id/unban/:civ', (req, res) => {
 	res.send("Banned and Updated");
 });
 
-router.post('rooms/:id/pick/:team/:civ', (req,res) => {
+router.post('/rooms/:id/pick/:team/:civ', (req,res) => {
 	const id = req.params.id;
 	const team = req.params.team;
-
+	console.log(team);
 	Room.findByIdAndUpdate(id, 
 		{$pull: { "civs" : req.params.civ}},
 		(err, model) =>{
@@ -141,16 +141,67 @@ router.post('rooms/:id/pick/:team/:civ', (req,res) => {
 			console.log("Updated Bans");
 		}
 	);
+	if(team == 'team_1'){
+		Room.findByIdAndUpdate(id, 
+			{$addToSet: { "team_1" : req.params.civ}},
+			(err, model) =>{
+				if(err) throw err;
+
+				console.log("Updated civs");
+			}
+		);
+	}
+	else{
+		Room.findByIdAndUpdate(id, 
+			{$addToSet: { "team_2" : req.params.civ}},
+			(err, model) =>{
+				if(err) throw err;
+
+				console.log("Updated civs");
+			}
+		);
+	}
+	
+
+	res.send(team + " picked " + req.params.civ);
+
+});
+
+router.post('/rooms/:id/unpick/:team/:civ', (req,res) => {
+	const id = req.params.id;
+	const team = req.params.team;
+
+	if(team == 'team_1'){
+		Room.findByIdAndUpdate(id, 
+			{$pull: { "team_1" : req.params.civ}},
+			(err, model) =>{
+				if(err) throw err;
+
+				console.log("Updated civs");
+			}
+		);
+	}
+	else{
+		Room.findByIdAndUpdate(id, 
+			{$pull: { "team_2" : req.params.civ}},
+			(err, model) =>{
+				if(err) throw err;
+
+				console.log("Updated civs");
+			}
+		);
+	}
 
 	Room.findByIdAndUpdate(id, 
-		{$addToSet: { team : req.params.civ}},
+		{$addToSet: { "civs" : req.params.civ}},
 		(err, model) =>{
 			if(err) throw err;
 
-			console.log("Updated civs");
+			console.log("Updated Bans");
 		}
 	);
 
+	
 	res.send(team + " picked " + req.params.civ);
 
 });

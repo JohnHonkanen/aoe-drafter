@@ -57,6 +57,10 @@ io.on('connection', (socket) => {
 		console.log("Draft Update");
 		io.emit('update', civ);
 	});
+
+	socket.on('completePhase', (team) =>{
+		io.emit('completePhase', team);
+	});
 });
 /**
  * Listen on provided port, on all network interfaces.

@@ -1,9 +1,23 @@
-
+<!--<div class ="container">
+	<div class="row">
+		<form class="form-inline">
+			<div class="form-group">
+				<label for="name">Number of Civs</label>
+				<input type="number" class="form-control" id="number" required>
+			</div>
+			<div>
+				<button class="col-sm margin">
+					Create Room
+				</button>
+			</div>
+		</form>
+	</div>
+</div> -->
 <div class="container">
   <div class="row" *ngFor="let room of rooms">
     <div class="card card-block col-sm-12 ml-1">
       <h4 class="card-title">Room: {{ room._id }}</h4>
-      <p class="card-text">ng
+      <p class="card-text">
       	<span *ngFor="let civ of room.civs; let isLast=last "> {{civ}} {{isLast ? '' : ', '}} </span>
       </p>
       <a [routerLink]="['/rooms', room._id]" class="card-link">Enter Room</a>

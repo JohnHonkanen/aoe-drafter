@@ -2,20 +2,41 @@
   room {{ room._id }}
 </h2>
 
-<div class="container">
+<div class="container card margin">
 	<h4> Available Civilizations </h4>
 	<div class="row">
-		<button *ngFor="let civ of room.civs" class="col-sm green margin" on-click="banCiv(civ)" >
+		<button *ngFor="let civ of room.civs" class="col-sm-2 green margin" on-click="banCiv(civ)" >
 			{{civ}}
 		</button>
 	</div>
 </div>
-<div class="container">
+<div class="container card margin">
 	<h4> Banned Civs </h4>
 	<div class="row">
-		<button *ngFor="let ban of room.bans;" class="col-sm red margin" on-click="unBanCiv(ban)">
+		<button *ngFor="let ban of room.bans;" class="col-sm-2 red margin" on-click="unBanCiv(ban)">
 			{{ban}}
 		</button>
+	</div>
+</div>
+<div class="container margin">
+	<div class="row">
+		<div class="col-sm-6 padding-5">
+			<div class="card padding-5">
+				<h5> Team 1 Picks <span *ngIf="team1Pick"><button on-click="completePhase(1)"> Confirm</button></span></h5>
+					<button *ngFor="let civ of room.team_1;" class="col-sm-11 green margin" on-click="unBanCiv(civ)">
+						{{civ}}
+					</button>
+			</div>
+			
+		</div>
+		<div class="col-sm-6 padding-5">
+			<div class="card padding-5">
+				<h5> Team 2 Picks <span *ngIf="!team1Pick"><button on-click="completePhase(2)"> Confirm</button></span></h5>
+					<button *ngFor="let civ of room.team_2;" class="col-sm-11 green margin" on-click="unBanCiv(civ)">
+						{{civ}}
+					</button>
+			</div>
+		</div>
 	</div>
 </div>
 

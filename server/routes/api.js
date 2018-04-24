@@ -31,4 +31,17 @@ router.get('/rooms/:id', (req, res) => {
 		});
 });
 
+router.get('/rooms/create/:number', (req, res) => {
+	const number = req.params.number;
+	console.log(number);
+	axios.post(`${API}/rooms/create/random/` + number)
+		.then(result => {
+			res.redirect('/rooms/' + result.data);
+			res.send("Completed");
+		})
+		.catch(error => {
+			res.status(500).send(error);
+		});
+});
+
 module.exports = router;

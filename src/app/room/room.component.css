@@ -1,6 +1,9 @@
 .margin{
 		margin: 5px;
 }
+.padding-5{
+	padding: 5px;
+}
 .green {
 	background-color: #7FFF00;
 }
